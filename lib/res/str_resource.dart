@@ -10,4 +10,8 @@ class StrResource{
   static var splash_text_1 = "Search for favorite food near you";
   static var splash_text_2 = "Find best restaurant Services";
   static var splash_text_3 = "Pickup delivery at your home";
+
+  static var homepage_food_title = "Popular food today";
+  static var homepage_food_text = "Keeping up to date";
+
 }

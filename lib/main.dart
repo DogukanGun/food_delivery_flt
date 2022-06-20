@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_delivery_flt/ui/home/home.dart';
+import 'package:food_delivery_flt/ui/home/Home.dart';
 import 'package:food_delivery_flt/ui/home/home_cubit.dart';
-import 'package:food_delivery_flt/ui/splash/splash.dart';
+import 'package:food_delivery_flt/ui/splash/Splash.dart';
 
 void main() {
   runApp(const MyApp());
