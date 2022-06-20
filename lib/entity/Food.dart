@@ -1,17 +1,17 @@
 
 class Food{
-  int id;
+  String id;
   String food_name;
   String image_name;
-  int price;
+  String price;
 
   Food({required this.id,required this.food_name,required this.image_name,required this.price});
 
   factory Food.fromJson(Map<String, dynamic> json) => Food(
-    id: json["yemek_id"] as int,
+    id: json["yemek_id"] as String,
     food_name: json["yemek_adi"] as String,
     image_name: json["yemek_resim_adi"] as String,
-    price: json["yemek_fiyat"] as int,
+    price: json["yemek_fiyat"] as String,
   );
 
   Map<String, dynamic> toJson() => {
