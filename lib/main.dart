@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery_flt/ui/home/Home.dart';
-import 'package:food_delivery_flt/ui/home/home_cubit.dart';
+import 'package:food_delivery_flt/ui/home/HomeCubit.dart';
+import 'package:food_delivery_flt/ui/search/SearchCubit.dart';
 import 'package:food_delivery_flt/ui/splash/Splash.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context)=>HomeCubit())],
+      providers: [BlocProvider(create: (context)=>HomeCubit()),BlocProvider(create: (context)=>SearchCubit())],
       child: MaterialApp(
         title: 'Flutter Demo',
         routes: <String,WidgetBuilder>{

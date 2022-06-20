@@ -1,6 +1,6 @@
 
 class EndPoints{
-  final String _url = "http://kasimadalan.pe.hu/yemekler/";
+  static String _url = "http://kasimadalan.pe.hu/yemekler/";
 
   static const String _getAllFoods ="tumYemekleriGetir.php";
   String getAllFoods(){
@@ -23,7 +23,7 @@ class EndPoints{
   }
 
   static const String _getImageFromService ="resimler/";
-  String getImageFromService(String name){
+  static String getImageFromService(String name){
     return _url+_getImageFromService+name;
   }
 

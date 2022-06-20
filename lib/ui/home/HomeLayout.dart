@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery_flt/entity/Food.dart';
-import 'package:food_delivery_flt/ui/home/home_cubit.dart';
+import 'package:food_delivery_flt/ui/home/HomeCubit.dart';
 
 import '../../res/dimen_resource.dart';
 import '../../res/str_resource.dart';

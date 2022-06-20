@@ -26,11 +26,10 @@ class FoodCard extends StatelessWidget {
               SizedBox(
                   width: width,
                   height: height,
-                  child: Image.network(EndPoints().getImageFromService(food.image_name))
+                  child: Image.network(EndPoints.getImageFromService(food.image_name))
               ),
               const Spacer(),
               Text(food.food_name,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-
             ],
           ),
         )
