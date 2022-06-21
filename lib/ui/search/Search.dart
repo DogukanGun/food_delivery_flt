@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery_flt/network/EndPoints.dart';
 import 'package:food_delivery_flt/res/dimen_resource.dart';
+import 'package:food_delivery_flt/ui/food_detail/FoodDetail.dart';
 import 'package:food_delivery_flt/ui/search/SearchCubit.dart';
+import 'package:food_delivery_flt/ui/widgets/FoodListItem.dart';
 
 import '../../entity/Food.dart';
 import '../../res/color_resource.dart';
@@ -66,58 +68,9 @@ class _SearchState extends State<Search> {
                       shrinkWrap: true,
                       itemBuilder: (context,index){
                         var food = foods[index];
-                        return SizedBox(
-                          height: 150,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10.0,right: 15.0,top: 10.0,bottom: 10.0),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 50.0),
-                                    child: Image.network(EndPoints.getImageFromService(food.image_name)),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        food.food_name,
-                                        style: TextStyle(
-                                            fontSize: DimenResource.small_text,
-                                            fontWeight: FontWeight.bold
-                                        ),
-                                      ),
-                                      Text(
-                                        "${food.price} TL",
-                                        style: TextStyle(
-                                            fontSize: DimenResource.small_text,
-                                            fontWeight: FontWeight.normal
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      ElevatedButton(
-                                        onPressed: (){
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          primary: ColorResource.button_primary_color,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(150)),
-                                        ),
-                                        child:const  Padding(
-                                          padding: EdgeInsets.all(5.0),
-                                          child: Icon(Icons.navigate_next_sharp,color: Colors.black,),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        return FoodListItem(food: food,voidCallback: (){
+                          context.read<SearchCubit>().addFoodToBasket(food, "Dogukan", 1);
+                        },);
                       }
                   ),
                 ),

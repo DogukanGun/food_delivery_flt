@@ -2,13 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:food_delivery_flt/res/color_resource.dart';
-import 'package:food_delivery_flt/res/dimen_resource.dart';
-import 'package:food_delivery_flt/res/str_resource.dart';
 import 'package:food_delivery_flt/ui/home/HomeLayout.dart';
 import 'package:food_delivery_flt/ui/profile/Profile.dart';
 import 'package:food_delivery_flt/ui/search/Search.dart';
 import 'package:food_delivery_flt/ui/shopping_bag/ShoppingBag.dart';
-import 'package:food_delivery_flt/ui/widgets/FoodCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/LocalstorageKeys.dart';
@@ -21,6 +18,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
   Future<void> getFirstUsage(BuildContext context, VoidCallback onSuccess) async {
     final prefs = await SharedPreferences.getInstance();
     var value = prefs.getBool(LocalStorageKeys.IS_FIRST_USAGE.name);

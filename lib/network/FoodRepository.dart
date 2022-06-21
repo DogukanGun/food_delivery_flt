@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:food_delivery_flt/entity/Food.dart';
+import 'package:food_delivery_flt/entity/FoodBasket.dart';
+import 'package:food_delivery_flt/entity/FoodBasketResponse.dart';
 import 'package:food_delivery_flt/entity/FoodResponse.dart';
 import 'package:food_delivery_flt/network/EndPoints.dart';
 import 'package:food_delivery_flt/network/IFoodRepository.dart';
@@ -34,10 +36,11 @@ class FoodRepository extends IFoodRepository{
   }
 
   @override
-  Future<List<Food>> getAllFoodsInBasket(String username) async {
+  Future<List<FoodBasket>> getAllFoodsInBasket(String username) async {
     var data = {"kullanici_adi":username};
-    var response = await Dio().post(endPoints.getAddFoodToBasket(),data: FormData.fromMap(data));
-    return FoodResponse.fromJson(json.decode(response.data.toString())).foodList;
+    var response = await Dio().post(endPoints.getAllFoodsInBasket(),data: FormData.fromMap(data));
+    print(response.data.toString());
+    return FoodBasketResponse.fromJson(json.decode(response.data.toString())).foodList;
   }
 
 }

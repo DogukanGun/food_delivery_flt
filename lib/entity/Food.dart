@@ -1,5 +1,7 @@
 
-class Food{
+import 'package:food_delivery_flt/entity/IFood.dart';
+
+class Food extends IFood{
   String id;
   String food_name;
   String image_name;

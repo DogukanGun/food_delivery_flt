@@ -1,10 +1,12 @@
 
-class FoodBasket{
-  int id;
+import 'package:food_delivery_flt/entity/IFood.dart';
+
+class FoodBasket extends IFood{
+  String id;
   String food_name;
   String image_name;
-  int price;
-  int foodAmount;
+  String price;
+  String foodAmount;
   String username;
 
   FoodBasket({required this.id,required this.food_name,
@@ -12,11 +14,11 @@ class FoodBasket{
     ,required this.username});
 
   factory FoodBasket.fromJson(Map<String, dynamic> json) => FoodBasket(
-    id: json["sepet_yemek_id"] as int,
+    id: json["sepet_yemek_id"] as String,
     food_name: json["yemek_adi"] as String,
     image_name: json["yemek_resim_adi"] as String,
-    price: json["yemek_fiyat"] as int,
-    foodAmount: json["yemek_siparis_adet"] as int,
+    price: json["yemek_fiyat"] as String,
+    foodAmount: json["yemek_siparis_adet"] as String,
     username: json["kullanici_adi"] as String
   );
 
