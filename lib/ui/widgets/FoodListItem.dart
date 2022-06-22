@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:food_delivery_flt/ui/widgets/AmountCounter.dart';
+import 'package:food_delivery_flt/ui/widgets/FoodDialog.dart';
 
 import '../../entity/Food.dart';
 import '../../network/EndPoints.dart';
@@ -7,16 +10,34 @@ import '../../res/dimen_resource.dart';
 import '../food_detail/FoodDetail.dart';
 
 class FoodListItem extends StatefulWidget {
+  int totalAmount;
+  bool purchaseAvailable;
   Food food;
-  VoidCallback voidCallback;
+  Function(int) purchase;
+  VoidCallback delete;
 
-  FoodListItem({Key? key, required this.food, required this.voidCallback}) : super(key: key);
+  FoodListItem({Key? key,required this.totalAmount, required this.food, required this.purchase,required this.purchaseAvailable,required this.delete}) : super(key: key);
 
   @override
   State<FoodListItem> createState() => _FoodListItemState();
 }
 
 class _FoodListItemState extends State<FoodListItem> {
+  final TextEditingController _controller = TextEditingController();
+  bool errorTextActive = false;
+
+  void _decrement(){
+    if(widget.totalAmount>1){
+      setState((){widget.totalAmount -= 1;});
+    }else{
+      widget.delete.call();
+    }
+  }
+
+  void _increment(){
+    setState((){widget.totalAmount += 1;});
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -24,7 +45,7 @@ class _FoodListItemState extends State<FoodListItem> {
         Navigator.push(context, MaterialPageRoute(builder: (context)=>FoodDetail(food: widget.food,)));
       },
       child: SizedBox(
-        height: 150,
+        height: 180,
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
@@ -34,7 +55,7 @@ class _FoodListItemState extends State<FoodListItem> {
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 50.0),
+                  padding: const EdgeInsets.only(right: 20.0),
                   child: Image.network(EndPoints.getImageFromService(widget.food.image_name)),
                 ),
                 Column(
@@ -55,18 +76,40 @@ class _FoodListItemState extends State<FoodListItem> {
                           fontWeight: FontWeight.normal
                       ),
                     ),
-                    Spacer(),
-                    ElevatedButton(
-                      onPressed: (){
-                        widget.voidCallback.call();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: ColorResource.button_primary_color,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(150)),
+                    const Spacer(),
+                    Visibility(
+                      visible: !widget.purchaseAvailable,
+                      child: Row(
+                        children: [
+                          AmountCounter(
+                              totalAmount: widget.totalAmount,
+                              increment: _increment,
+                              decrement: _decrement
+                          ),
+                        ],
                       ),
-                      child:const  Padding(
-                        padding: EdgeInsets.all(5.0),
-                        child: Icon(Icons.shopping_bag,color: Colors.black,),
+                    ),
+                    Visibility(
+                      visible: widget.purchaseAvailable,
+                      child: ElevatedButton(
+                        onPressed: (){
+                          showDialog(context: context, builder: (BuildContext buildContext){
+                            return FoodDialog(
+                                purchase:(amount){} ,
+                                totalAmount: widget.totalAmount,
+                                popCallback: (){Navigator.pop(context);}
+                            );
+                          }
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: ColorResource.button_primary_color,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(150)),
+                        ),
+                        child:const  Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: Icon(Icons.shopping_bag,color: Colors.black,),
+                        ),
                       ),
                     )
                   ],

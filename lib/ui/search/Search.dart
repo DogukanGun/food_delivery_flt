@@ -33,6 +33,7 @@ class _SearchState extends State<Search> {
         builder: (context,foods){
           return Column(
             children: [
+              //search bar
               Padding(
                 padding: const EdgeInsets.only(left: 15.0,right: 15.0,bottom: 15.0),
                 child: Container(
@@ -68,9 +69,15 @@ class _SearchState extends State<Search> {
                       shrinkWrap: true,
                       itemBuilder: (context,index){
                         var food = foods[index];
-                        return FoodListItem(food: food,voidCallback: (){
-                          context.read<SearchCubit>().addFoodToBasket(food, "Dogukan", 1);
-                        },);
+                        return FoodListItem(
+                          totalAmount: 1,
+                          food: food,
+                          delete:(){},
+                          purchaseAvailable:true,
+                          purchase: (totalAmount){
+                            context.read<SearchCubit>().addFoodToBasket(food, "Dogukan", totalAmount);
+                          },
+                        );
                       }
                   ),
                 ),

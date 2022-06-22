@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery_flt/entity/Food.dart';
 import 'package:food_delivery_flt/ui/home/HomeCubit.dart';
+import 'package:food_delivery_flt/ui/search/Search.dart';
 
 import '../../res/dimen_resource.dart';
 import '../../res/str_resource.dart';
@@ -16,7 +17,7 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   var chipList = ["All","Meat","Salad","Drink","Dessert"];
-
+  var clickedChipIndex = 0;
 
   @override
   void initState() {
@@ -90,21 +91,26 @@ class _HomeLayoutState extends State<HomeLayout> {
                             if(index == 0){
                               return Padding(
                                 padding: const EdgeInsets.only(left: 15.0,right: 10.0),
-                                child: ActionChip(
-                                  elevation: 3,
-                                  padding: const EdgeInsets.all(8),
-                                  backgroundColor: Colors.white,
-                                  shadowColor: Colors.black,
-                                  avatar: const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        "asset/illustration1.png"),
-                                  ), //CircleAvatar
-                                  label: Text(
-                                    chipList[index],
-                                    style: const TextStyle(fontSize: 20),
-                                  ), onPressed: () {
-
-                                }, //Text
+                                child: GestureDetector(
+                                  onTap: (){
+                                    setState((){clickedChipIndex = index;});
+                                  },
+                                  child: ActionChip(
+                                    elevation: 3,
+                                    padding: const EdgeInsets.all(8),
+                                    backgroundColor: clickedChipIndex == index ? Colors.greenAccent : Colors.white,
+                                    shadowColor: Colors.black,
+                                    avatar: const CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          "asset/illustration1.png"),
+                                    ), //CircleAvatar
+                                    label: Text(
+                                      chipList[index],
+                                      style: const TextStyle(fontSize: 20),
+                                    ), onPressed: () {
+                                      setState((){clickedChipIndex = index;});
+                                    },  //Text
+                                  ),
                                 ),
                               );
                             }else{
@@ -149,7 +155,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   fontWeight: FontWeight.bold
                               ),
                             ),
-                            TextButton(onPressed: (){},
+                            TextButton(
+                                onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Search()));
+                                },
                                 child: Row(
                                   children: [
                                     Text("See all",style: TextStyle(color: Colors.black,fontSize: DimenResource.small_text),),

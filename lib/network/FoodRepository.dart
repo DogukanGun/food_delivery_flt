@@ -25,7 +25,7 @@ class FoodRepository extends IFoodRepository{
   @override
   Future<void> deleteFoodFromBasket(DeleteFoodFromBasketRequest deleteFoodFromBasketRequest) async {
     var data = deleteFoodFromBasketRequest.toJson();
-    var response = await Dio().post(endPoints.getAddFoodToBasket(),data: FormData.fromMap(data));
+    var response = await Dio().post(endPoints.getDeleteFoodFromBasket(),data: FormData.fromMap(data));
   }
 
   @override
@@ -39,8 +39,11 @@ class FoodRepository extends IFoodRepository{
   Future<List<FoodBasket>> getAllFoodsInBasket(String username) async {
     var data = {"kullanici_adi":username};
     var response = await Dio().post(endPoints.getAllFoodsInBasket(),data: FormData.fromMap(data));
-    print(response.data.toString());
-    return FoodBasketResponse.fromJson(json.decode(response.data.toString())).foodList;
+    try{
+      return FoodBasketResponse.fromJson(json.decode(response.data.toString())).foodList;
+    }on Exception catch(_){
+      return <FoodBasket>[];
+    }
   }
 
 }

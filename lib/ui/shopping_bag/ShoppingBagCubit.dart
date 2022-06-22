@@ -4,6 +4,8 @@ import 'package:food_delivery_flt/entity/Food.dart';
 import 'package:food_delivery_flt/entity/FoodBasket.dart';
 import 'package:food_delivery_flt/network/FoodRepository.dart';
 
+import '../../entity/DeleteFoodFromBasketRequest.dart';
+
 class ShoppingBagCubit extends Cubit<List<FoodBasket>>{
 
   ShoppingBagCubit():super(<FoodBasket>[]);
@@ -13,5 +15,15 @@ class ShoppingBagCubit extends Cubit<List<FoodBasket>>{
   Future<void> getAllFoodsOfUser(String username)async {
     var basketFoodsRepo = await repo.getAllFoodsInBasket(username);
     emit(basketFoodsRepo);
+  }
+
+  Future<void> deleteFoodFromBasket(FoodBasket foodBasket) async{
+    var deleteFoodFromBasket = DeleteFoodFromBasketRequest(
+        id: int.parse(foodBasket.id),
+        username: foodBasket.username
+    );
+    await repo.deleteFoodFromBasket(deleteFoodFromBasket);
+    var foods = await repo.getAllFoodsInBasket(deleteFoodFromBasket.username);
+    emit(foods);
   }
 }

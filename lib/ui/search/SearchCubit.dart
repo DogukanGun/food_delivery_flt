@@ -1,6 +1,8 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_delivery_flt/entity/DeleteFoodFromBasketRequest.dart';
 import 'package:food_delivery_flt/entity/Food.dart';
+import 'package:food_delivery_flt/entity/FoodBasket.dart';
 import 'package:food_delivery_flt/network/FoodRepository.dart';
 
 import '../../entity/AddFoodToBasketRequest.dart';
@@ -32,8 +34,7 @@ class SearchCubit extends Cubit<List<Food>>{
         price: int.parse(food.price),
         foodAmount: foodAmount,
         username: username);
-    repo.addFoodToBasket(addFoodToBasketRequest);
+    await repo.addFoodToBasket(addFoodToBasketRequest);
   }
-
 
 }
