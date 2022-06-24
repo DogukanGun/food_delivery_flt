@@ -44,8 +44,7 @@ class _FoodDialogState extends State<FoodDialog> {
         ),
         TextButton(
             onPressed: (){
-              widget.popCallback.call();
-              widget.purchase.call(widget.totalAmount);
+               widget.purchase.call(widget.totalAmount);
             },
             child: const Text("Buy")
         ),

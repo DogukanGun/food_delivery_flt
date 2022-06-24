@@ -38,11 +38,40 @@ class _FoodListItemState extends State<FoodListItem> {
     setState((){widget.totalAmount += 1;});
   }
 
+  Widget showDeleteDialog(BuildContext buildContext){
+    return AlertDialog(
+        title: Text("Good by ${widget.food.food_name}"),
+        content: Text("Are you sure?"),
+        actions: <Widget>[
+          TextButton(
+              onPressed: (){
+                Navigator.pop(buildContext);
+              },
+              child: const Text("Cancel")
+          ),
+          TextButton(
+              onPressed: (){
+                widget.delete.call();
+                Navigator.pop(buildContext);
+              },
+              child: const Text("Delete")
+          ),
+        ],
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (context)=>FoodDetail(food: widget.food,)));
+      },
+      onLongPress: (){
+        if(widget.purchaseAvailable){
+          showDialog(context: context, builder: (BuildContext buildContext){
+            return showDeleteDialog(buildContext);
+          });
+        }
       },
       child: SizedBox(
         height: 180,
@@ -51,7 +80,7 @@ class _FoodListItemState extends State<FoodListItem> {
             borderRadius: BorderRadius.circular(30.0),
           ),
           child: Padding(
-            padding: const EdgeInsets.only(left: 10.0,right: 15.0,top: 10.0,bottom: 10.0),
+            padding: const EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0,bottom: 10.0),
             child: Row(
               children: [
                 Padding(
@@ -95,7 +124,10 @@ class _FoodListItemState extends State<FoodListItem> {
                         onPressed: (){
                           showDialog(context: context, builder: (BuildContext buildContext){
                             return FoodDialog(
-                                purchase:(amount){} ,
+                                purchase:(amount){
+                                  Navigator.pop(context);
+                                  widget.purchase(amount);
+                                },
                                 totalAmount: widget.totalAmount,
                                 popCallback: (){Navigator.pop(context);}
                             );

@@ -33,28 +33,6 @@ class _HomeLayoutState extends State<HomeLayout> {
           if(foods.isNotEmpty){
             return Column(
               children: [
-                //search bar
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0,right: 15.0),
-                  child: Container(
-                    decoration:  const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(100))
-                    ),
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Ara",
-                        contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                        suffixIcon: Icon(Icons.search),
-                        hintStyle: TextStyle(color: Colors.black),
-                      ),
-                      style: const TextStyle(color: Colors.black),
-                      onChanged: (text){
-                      },
-                    ),
-                  ),
-                ),
                 //FoodCard List
                 Padding(
                   padding: const EdgeInsets.only(top: 15.0),

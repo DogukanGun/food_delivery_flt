@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery_flt/ui/food_detail/FoodDetailCubit.dart';
 import 'package:food_delivery_flt/ui/home/Home.dart';
 import 'package:food_delivery_flt/ui/home/HomeCubit.dart';
+import 'package:food_delivery_flt/ui/order/OrderUIStep2Cubit.dart';
 import 'package:food_delivery_flt/ui/search/SearchCubit.dart';
 import 'package:food_delivery_flt/ui/shopping_bag/ShoppingBagCubit.dart';
 import 'package:food_delivery_flt/ui/splash/Splash.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context)=>SearchCubit()),
         BlocProvider(create: (context)=>ShoppingBagCubit()),
         BlocProvider(create: (context)=>FoodDetailCubit()),
+        BlocProvider(create: (context)=>OrderUIStep2Cubit())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -7,6 +7,7 @@ import 'package:food_delivery_flt/ui/food_detail/FoodDetailCubit.dart';
 
 import '../../entity/Food.dart';
 import '../../res/color_resource.dart';
+import '../widgets/FoodAppBar.dart';
 
 class FoodDetail extends StatefulWidget {
   Food food;
@@ -32,12 +33,12 @@ class _FoodDetailState extends State<FoodDetail> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = (MediaQuery.of(context).size.height);
+
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.food.food_name.toUpperCase(),style:  TextStyle(color: Colors.black),),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
+      appBar:  PreferredSize(
+        preferredSize: Size.fromHeight(screenHeight/10),
+        child: FoodAppBar(title: "Dogukan")
       ),
       body: Center(
         child: Column(

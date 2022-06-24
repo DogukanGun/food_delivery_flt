@@ -6,6 +6,7 @@ import 'package:food_delivery_flt/ui/home/HomeLayout.dart';
 import 'package:food_delivery_flt/ui/profile/Profile.dart';
 import 'package:food_delivery_flt/ui/search/Search.dart';
 import 'package:food_delivery_flt/ui/shopping_bag/ShoppingBag.dart';
+import 'package:food_delivery_flt/ui/widgets/FoodAppBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/LocalstorageKeys.dart';
@@ -33,16 +34,14 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = (MediaQuery.of(context).size.height);
+    double screenWidth = (MediaQuery.of(context).size.width);
+
     return Scaffold(
       backgroundColor: ColorResource.background_color,
-      appBar:  AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Hello Dogukan",
-          style:  TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
+      appBar:  PreferredSize(
+          preferredSize: Size.fromHeight(screenHeight/10),
+          child: FoodAppBar(title: "Dogukan")
       ),
       body: pageList[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

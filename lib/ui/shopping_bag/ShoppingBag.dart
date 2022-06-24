@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_delivery_flt/entity/Food.dart';
 import 'package:food_delivery_flt/entity/FoodBasket.dart';
+import 'package:food_delivery_flt/res/dimen_resource.dart';
 import 'package:food_delivery_flt/ui/search/SearchCubit.dart';
 import 'package:food_delivery_flt/ui/shopping_bag/ShoppingBagCubit.dart';
 import 'package:food_delivery_flt/ui/widgets/FoodListItem.dart';
 
 import '../../res/color_resource.dart';
+import '../order/OrderUIStep1.dart';
 
 class ShoppingBag extends StatefulWidget {
   const ShoppingBag({Key? key}) : super(key: key);
@@ -15,10 +17,18 @@ class ShoppingBag extends StatefulWidget {
   State<ShoppingBag> createState() => _ShoppingBagState();
 }
 
-class _ShoppingBagState extends State<ShoppingBag> {
+class _ShoppingBagState extends State<ShoppingBag> with WidgetsBindingObserver {
 
   void _delete(FoodBasket food){
     context.read<ShoppingBagCubit>().deleteFoodFromBasket(food);
+  }
+
+  int getTotalPrice(List<FoodBasket> foodBasket){
+    int total = 0;
+    for(FoodBasket foodBasket in foodBasket){
+        total += (int.parse(foodBasket.foodAmount)*int.parse(foodBasket.price));
+    }
+    return total;
   }
 
   @override
@@ -28,6 +38,7 @@ class _ShoppingBagState extends State<ShoppingBag> {
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ListView.builder(
                   itemCount: foods.length,
@@ -49,27 +60,40 @@ class _ShoppingBagState extends State<ShoppingBag> {
                     );
                   }
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child:
-                        ElevatedButton(
-                          onPressed: (){
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: ColorResource.button_primary_color,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(150)),
-                          ),
-                          child:const  Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text("Let's Buy"),
-                          ),
-                        ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
+                    child: Row(
+                      children: [
+                        Text(
+                            "Total price : ${getTotalPrice(foods)}",
+                            style: TextStyle(fontSize: DimenResource.medium_text,fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child:
+                          ElevatedButton(
+                            onPressed: (){
+                              Navigator.push(context,MaterialPageRoute(builder:(context)=>OrderUIStep1(foods: foods,)));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: ColorResource.button_primary_color,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(150)),
+                            ),
+                            child:const  Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Text("Let's Buy"),
+                            ),
+                          ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
@@ -77,9 +101,22 @@ class _ShoppingBagState extends State<ShoppingBag> {
       },
     );
   }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+
+    if (state == AppLifecycleState.resumed) {
+      context.read<ShoppingBagCubit>().getAllFoodsOfUser("Dogukan");
+    }
+  }
 
   @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+  @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
     context.read<ShoppingBagCubit>().getAllFoodsOfUser("Dogukan");
   }
