@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:food_delivery_flt/ui/order/OrderUIStep2.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../entity/FoodBasket.dart';
 import '../widgets/FoodAppBar.dart';
@@ -21,6 +23,7 @@ class _OrderUIStep1State extends State<OrderUIStep1> {
   TextEditingController telephoneEditingController = TextEditingController();
   int currentStep = 0;
   int _stepCount = 2;
+  final maskCpf = MaskTextInputFormatter(mask: "###-###-##-##", filter: {"#": RegExp(r'[0-9]')});
 
 
   StepState isState2Complete(){
@@ -85,7 +88,11 @@ class _OrderUIStep1State extends State<OrderUIStep1> {
                     content: TextField(
                       keyboardType: TextInputType.number,
                       controller: telephoneEditingController,
-                      decoration: const InputDecoration(hintText: "phone number"),
+                      maxLength: 14,
+                      inputFormatters:[
+                        maskCpf
+                      ],
+                      decoration: const InputDecoration(icon: Icon(Icons.phone_iphone),hintText: "phone number"),
                     )
                   )
                 ],

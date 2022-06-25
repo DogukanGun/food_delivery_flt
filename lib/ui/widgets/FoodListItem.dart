@@ -26,6 +26,10 @@ class _FoodListItemState extends State<FoodListItem> {
   final TextEditingController _controller = TextEditingController();
   bool errorTextActive = false;
 
+  double dragDirection = 0.0;
+  double startDXPoint = 0.0;
+  double startDYPoint = 0.0;
+
   void _decrement(){
     if(widget.totalAmount>1){
       setState((){widget.totalAmount -= 1;});
@@ -64,10 +68,20 @@ class _FoodListItemState extends State<FoodListItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>FoodDetail(food: widget.food,)));
+       // Navigator.push(context, MaterialPageRoute(builder: (context)=>FoodDetail(food: widget.food,)));
+      },
+      onHorizontalDragStart: (DragStartDetails start){
+        this.startDXPoint = start.globalPosition.dx.floorToDouble();
+        this.startDYPoint = start.globalPosition.dy.floorToDouble();
+      },
+      onHorizontalDragEnd: (DragEndDetails end){
+        double result = end.velocity.pixelsPerSecond.dx.abs().floorToDouble();
+        if(result>500){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>FoodDetail(food: widget.food,)));
+        }
       },
       onLongPress: (){
-        if(widget.purchaseAvailable){
+        if(!widget.purchaseAvailable){
           showDialog(context: context, builder: (BuildContext buildContext){
             return showDeleteDialog(buildContext);
           });

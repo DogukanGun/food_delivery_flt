@@ -6,6 +6,7 @@ import 'package:food_delivery_flt/res/dimen_resource.dart';
 import 'package:food_delivery_flt/ui/search/SearchCubit.dart';
 import 'package:food_delivery_flt/ui/shopping_bag/ShoppingBagCubit.dart';
 import 'package:food_delivery_flt/ui/widgets/FoodListItem.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../res/color_resource.dart';
 import '../order/OrderUIStep1.dart';
@@ -17,7 +18,7 @@ class ShoppingBag extends StatefulWidget {
   State<ShoppingBag> createState() => _ShoppingBagState();
 }
 
-class _ShoppingBagState extends State<ShoppingBag> with WidgetsBindingObserver {
+class _ShoppingBagState extends State<ShoppingBag>{
 
   void _delete(FoodBasket food){
     context.read<ShoppingBagCubit>().deleteFoodFromBasket(food);
@@ -35,48 +36,49 @@ class _ShoppingBagState extends State<ShoppingBag> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return BlocBuilder<ShoppingBagCubit,List<FoodBasket>>(
       builder: (context,foods){
-        return Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ListView.builder(
-                  itemCount: foods.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context,index){
-                    var food = foods[index];
-                    var foodBasket = Food(
-                        id: food.id.toString(),
-                        food_name: food.food_name,
-                        image_name: food.image_name,
-                        price: food.price.toString());
-                    return FoodListItem(
-                      totalAmount:int.parse(food.foodAmount),
-                      food: foodBasket,
-                      delete:(){_delete(food);},
-                      purchaseAvailable:false,
-                      purchase: (totalAmount){
-                      },
-                    );
-                  }
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0),
-                    child: Row(
-                      children: [
-                        Text(
+        if(foods.isNotEmpty){
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ListView.builder(
+                    itemCount: foods.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context,index){
+                      var food = foods[index];
+                      var foodBasket = Food(
+                          id: food.id.toString(),
+                          food_name: food.food_name,
+                          image_name: food.image_name,
+                          price: food.price.toString());
+                      return FoodListItem(
+                        totalAmount:int.parse(food.foodAmount),
+                        food: foodBasket,
+                        delete:(){_delete(food);},
+                        purchaseAvailable:false,
+                        purchase: (totalAmount){
+                        },
+                      );
+                    }
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: Row(
+                        children: [
+                          Text(
                             "Total price : ${getTotalPrice(foods)}",
                             style: TextStyle(fontSize: DimenResource.medium_text,fontWeight: FontWeight.bold),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child:
+                    Row(
+                      children: [
+                        Expanded(
+                          child:
                           ElevatedButton(
                             onPressed: (){
                               Navigator.push(context,MaterialPageRoute(builder:(context)=>OrderUIStep1(foods: foods,)));
@@ -90,33 +92,30 @@ class _ShoppingBagState extends State<ShoppingBag> with WidgetsBindingObserver {
                               child: Text("Let's Buy"),
                             ),
                           ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Lottie.asset('asset/crying.json'),
+              Text("Bag is empty",style: TextStyle(fontSize: DimenResource.big_text),)
             ],
           ),
         );
       },
     );
   }
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
 
-    if (state == AppLifecycleState.resumed) {
-      context.read<ShoppingBagCubit>().getAllFoodsOfUser("Dogukan");
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
     super.initState();
     context.read<ShoppingBagCubit>().getAllFoodsOfUser("Dogukan");
   }

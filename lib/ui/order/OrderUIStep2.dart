@@ -4,6 +4,7 @@ import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:food_delivery_flt/ui/order/OrderUIStep2Cubit.dart';
+import 'package:food_delivery_flt/ui/order/OrderUIStep3.dart';
 
 import '../../entity/FoodBasket.dart';
 import '../../res/color_resource.dart';
@@ -103,8 +104,7 @@ class _OrderUIStep2State extends State<OrderUIStep2> {
                             ElevatedButton(
                               onPressed: (){
                                 deleteFoods();
-                                Navigator.of(context).popUntil((route) => route.isFirst);
-
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const OrderUIStep3()));
                               },
                               style: ElevatedButton.styleFrom(
                                 primary: ColorResource.button_primary_color,

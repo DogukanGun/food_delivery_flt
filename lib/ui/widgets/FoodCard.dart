@@ -30,6 +30,7 @@ class FoodCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(food.food_name,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+              Text("${food.price} TL",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)
             ],
           ),
         )

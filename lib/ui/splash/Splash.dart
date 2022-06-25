@@ -23,7 +23,7 @@ class _SplashState extends State<Splash> {
   void nextState(){
     if(stateNumber >2){
       setFirstUsage(context, () {
-        Navigator.of(context).pushNamedAndRemoveUntil("/Home",(Route<dynamic> route)=>false);
+        Navigator.of(context).pushNamedAndRemoveUntil("/Login",(Route<dynamic> route)=>false);
       });
     }else{
       setState((){stateNumber+=1;});

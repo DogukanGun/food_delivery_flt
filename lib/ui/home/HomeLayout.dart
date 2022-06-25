@@ -40,7 +40,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                     height: 250,
                     child: GridView.builder(
                         scrollDirection:Axis.horizontal,
-                        itemCount: 5,
+                        itemCount: 3,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
                             childAspectRatio: 1 / 1
@@ -71,6 +71,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 padding: const EdgeInsets.only(left: 15.0,right: 10.0),
                                 child: GestureDetector(
                                   onTap: (){
+                                    //shared pref
                                     setState((){clickedChipIndex = index;});
                                   },
                                   child: ActionChip(
@@ -133,17 +134,6 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   fontWeight: FontWeight.bold
                               ),
                             ),
-                            TextButton(
-                                onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Search()));
-                                },
-                                child: Row(
-                                  children: [
-                                    Text("See all",style: TextStyle(color: Colors.black,fontSize: DimenResource.small_text),),
-                                    const Icon(Icons.arrow_forward_ios_outlined,color: Colors.black,)
-                                  ],
-                                )
-                            )
                           ]
                       ),
                       Text(
