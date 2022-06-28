@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
       backgroundColor: ColorResource.background_color,
       appBar:  PreferredSize(
           preferredSize: Size.fromHeight(screenHeight/10),
-          child: FoodAppBar(title: "Dogukan")
+          child: FoodAppBar(title: "Dogukan",saveButton: pageList[_selectedIndex].runtimeType == ShoppingBag,)
       ),
       body: pageList[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
