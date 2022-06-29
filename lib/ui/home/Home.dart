@@ -27,9 +27,17 @@ class _HomeState extends State<Home> {
     onSuccess.call();
   }
 
-  var pageList = const [HomeLayout(),Search(),ShoppingBag(),Profile()];
+  Future<void> getLoginState(BuildContext context, VoidCallback onSuccess) async {
+    final prefs = await SharedPreferences.getInstance();
+    var value = prefs.getBool(LocalStorageKeys.IS_LOGIN.name);
+    isLogin = value ?? true;
+    onSuccess.call();
+  }
+
+  var pageList =  [const HomeLayout(),const Search(),ShoppingBag(),const Profile()];
 
   var isFirstUsage = false;
+  var isLogin = false;
   int _selectedIndex = 0;
 
   @override
@@ -41,7 +49,9 @@ class _HomeState extends State<Home> {
       backgroundColor: ColorResource.background_color,
       appBar:  PreferredSize(
           preferredSize: Size.fromHeight(screenHeight/10),
-          child: FoodAppBar(title: "Dogukan",saveButton: pageList[_selectedIndex].runtimeType == ShoppingBag,)
+          child: FoodAppBar(title: "Dogukan",saveButton: pageList[_selectedIndex].runtimeType == ShoppingBag,voidCallback: (){
+            (pageList[2] as ShoppingBag).state.changeProducts();
+          })
       ),
       body: pageList[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -75,6 +85,12 @@ class _HomeState extends State<Home> {
       if(isFirstUsage) {
         Navigator.of(context).pushNamedAndRemoveUntil(
             "/Splash", (Route<dynamic> route) => false);
+      }
+    });
+    getLoginState(context, () {
+      if(!isLogin){
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            "/Home",(Route<dynamic> route)=>false);
       }
     });
   }

@@ -65,7 +65,7 @@ class _OrderUIStep1State extends State<OrderUIStep1> {
     return Scaffold(
       appBar:  PreferredSize(
           preferredSize: Size.fromHeight(screenHeight/10),
-          child: FoodAppBar(title: "Dogukan",saveButton: false,)
+          child: FoodAppBar(title: "Dogukan",saveButton: false,voidCallback: (){},)
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

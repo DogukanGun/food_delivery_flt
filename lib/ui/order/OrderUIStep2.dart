@@ -42,7 +42,7 @@ class _OrderUIStep2State extends State<OrderUIStep2> {
     return  Scaffold(
       appBar:  PreferredSize(
           preferredSize: Size.fromHeight(screenHeight/10),
-          child: FoodAppBar(title: "Dogukan",saveButton: false,)
+          child: FoodAppBar(title: "Dogukan",saveButton: false,voidCallback: (){})
       ),
       resizeToAvoidBottomInset: true,
       body: Padding(

@@ -33,13 +33,21 @@ class _FoodListItemState extends State<FoodListItem> {
   void _decrement(){
     if(widget.totalAmount>1){
       setState((){widget.totalAmount -= 1;});
+      _sendMessageToBasket();
     }else{
       widget.delete.call();
     }
   }
 
+  void _sendMessageToBasket(){
+    if(!widget.purchaseAvailable){
+      widget.purchase(widget.totalAmount);
+    }
+  }
+
   void _increment(){
     setState((){widget.totalAmount += 1;});
+    _sendMessageToBasket();
   }
 
   Widget showDeleteDialog(BuildContext buildContext){

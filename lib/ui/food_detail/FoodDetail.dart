@@ -38,7 +38,7 @@ class _FoodDetailState extends State<FoodDetail> {
     return Scaffold(
       appBar:  PreferredSize(
         preferredSize: Size.fromHeight(screenHeight/10),
-        child: FoodAppBar(title: "Dogukan",saveButton: false,)
+        child: FoodAppBar(title: "Dogukan",saveButton: false,voidCallback: (){})
       ),
       body: Center(
         child: Column(
