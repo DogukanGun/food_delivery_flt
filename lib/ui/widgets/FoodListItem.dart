@@ -109,64 +109,70 @@ class _FoodListItemState extends State<FoodListItem> {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: Image.network(EndPoints.getImageFromService(widget.food.image_name)),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.food.food_name,
-                      style: TextStyle(
-                          fontSize: DimenResource.small_text,
-                          fontWeight: FontWeight.bold
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        textAlign:TextAlign.right,
+                        widget.food.food_name,
+                        style: TextStyle(
+                            fontSize: DimenResource.small_text,
+                            fontWeight: FontWeight.bold
+                        ),
                       ),
-                    ),
-                    Text(
-                      "${widget.food.price} TL",
-                      style: TextStyle(
-                          fontSize: DimenResource.small_text,
-                          fontWeight: FontWeight.normal
+                      Text(
+                        textAlign:TextAlign.right,
+                        "${widget.food.price} TL",
+                        style: TextStyle(
+                            fontSize: DimenResource.small_text,
+                            fontWeight: FontWeight.normal
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    Visibility(
-                      visible: !widget.purchaseAvailable,
-                      child: Row(
-                        children: [
-                          AmountCounter(
-                              totalAmount: widget.totalAmount,
-                              increment: _increment,
-                              decrement: _decrement
-                          ),
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: widget.purchaseAvailable,
-                      child: ElevatedButton(
-                        onPressed: (){
-                          showDialog(context: context, builder: (BuildContext buildContext){
-                            return FoodDialog(
-                                purchase:(amount){
-                                  Navigator.pop(context);
-                                  widget.purchase(amount);
-                                },
+                      const Spacer(),
+                      Visibility(
+                        visible: !widget.purchaseAvailable,
+                        child: Row(
+                          children: [
+                            AmountCounter(
                                 totalAmount: widget.totalAmount,
-                                popCallback: (){Navigator.pop(context);}
-                            );
-                          }
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: ColorResource.button_primary_color,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(150)),
-                        ),
-                        child:const  Padding(
-                          padding: EdgeInsets.all(5.0),
-                          child: Icon(Icons.shopping_bag,color: Colors.black,),
+                                increment: _increment,
+                                decrement: _decrement
+                            ),
+                          ],
                         ),
                       ),
-                    )
-                  ],
+                      Visibility(
+                        visible: widget.purchaseAvailable,
+                        child: ElevatedButton(
+                          onPressed: (){
+                            showDialog(context: context, builder: (BuildContext buildContext){
+                              return FoodDialog(
+                                  purchase:(amount){
+                                    Navigator.pop(context);
+                                    widget.purchase(amount);
+                                  },
+                                  totalAmount: widget.totalAmount,
+                                  popCallback: (){Navigator.pop(context);}
+                              );
+                            }
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: ColorResource.button_primary_color,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(150)),
+                          ),
+                          child:const  Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Icon(Icons.shopping_bag,color: Colors.black,),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

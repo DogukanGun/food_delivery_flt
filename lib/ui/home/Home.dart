@@ -70,10 +70,6 @@ class _HomeState extends State<Home> {
             icon: ImageIcon(AssetImage("asset/Icon-Bag.png"),color: ColorResource.button_primary_color),
             label: '',
           ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("asset/Icon-Profile.png"),color: ColorResource.button_primary_color),
-            label: '',
-          ),
         ],
       ),
     );

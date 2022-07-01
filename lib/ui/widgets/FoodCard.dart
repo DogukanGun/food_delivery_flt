@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_flt/entity/Food.dart';
 import 'package:food_delivery_flt/network/EndPoints.dart';
 import 'package:food_delivery_flt/res/color_resource.dart';
+import 'package:food_delivery_flt/res/dimen_resource.dart';
 
 class FoodCard extends StatelessWidget {
 
@@ -29,8 +30,11 @@ class FoodCard extends StatelessWidget {
                   child: Image.network(EndPoints.getImageFromService(food.image_name))
               ),
               const Spacer(),
-              Text(food.food_name,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-              Text("${food.price} TL",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)
+              Text(food.food_name,style: TextStyle(
+                  color: Colors.white,
+                  fontSize: DimenResource.medium_text,
+                  fontWeight: FontWeight.bold),
+              ),
             ],
           ),
         )

@@ -51,7 +51,7 @@ class _OrderUIStep2State extends State<OrderUIStep2> {
           child: Column(
             children: <Widget>[
               CreditCardWidget(
-                cardBgColor: Colors.red,
+                cardBgColor: ColorResource.blue_color,
                 cardNumber: cardNumber,
                 expiryDate: expiryDate,
                 cardHolderName: cardHolderName,
